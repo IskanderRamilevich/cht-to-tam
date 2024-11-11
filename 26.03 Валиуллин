@@ -1,0 +1,225 @@
+1.
+def is_valid_password(password):
+    # Проверка длины пароля
+    if len(password) <= 8:
+        return "error"
+
+    # Проверка наличия больших и маленьких букв
+    has_lower = any(c.islower() for c in password)
+    has_upper = any(c.isupper() for c in password)
+    if not (has_lower and has_upper):
+        return "error"
+
+    # Проверка наличия хотя бы одной цифры
+    if not any(c.isdigit() for c in password):
+        return "error"
+
+    # Определяем последовательности клавиатуры
+    keyboard_sequences = [
+        "qwertyuiop", "asdfghjkl", "zxcvbnm",
+        "йцукенгшщз", "фывапролджэ", "ячсмитьбю"
+    ]
+
+    # Проверка на наличие недопустимых комбинаций
+    for seq in keyboard_sequences:
+        for i in range(len(seq) - 2):
+            if seq[i:i + 3] in password.lower() or seq[i:i + 3].upper() in password:
+                return "error"
+
+    return "ok"
+
+# Пример использования функции
+if __name__ == "__main__":
+    user_password = input("Введите пароль: ")
+    result = is_valid_password(user_password)
+    print(result)
+
+
+2.
+class PasswordError(Exception):
+    """Базовый класс для ошибок пароля."""
+    pass
+
+class LengthError(PasswordError):
+    """Ошибка, возникающая при недостаточной длине пароля."""
+    pass
+
+class LetterError(PasswordError):
+    """Ошибка, возникающая при отсутствии букв разных регистров."""
+    pass
+
+class DigitError(PasswordError):
+    """Ошибка, возникающая при отсутствии цифр в пароле."""
+    pass
+
+class SequenceError(PasswordError):
+    """Ошибка, возникающая при наличии недопустимых последовательностей символов."""
+    pass
+
+def check_password(password):
+    # Проверка длины пароля
+    if len(password) < 9:
+        raise LengthError("Пароль должен содержать не менее 9 символов.")
+
+    # Проверка наличия больших и маленьких букв
+    has_lower = any(c.islower() for c in password)
+    has_upper = any(c.isupper() for c in password)
+    if not (has_lower and has_upper):
+        raise LetterError("Пароль должен содержать буквы разных регистров.")
+
+    # Проверка наличия хотя бы одной цифры
+    if not any(c.isdigit() for c in password):
+        raise DigitError("Пароль должен содержать хотя бы одну цифру.")
+
+    # Определяем последовательности клавиатуры
+    keyboard_sequences = [
+        "qwertyuiop", "asdfghjkl", "zxcvbnm",
+        "йцукенгшщз", "фывапролджэ", "ячсмитьбю"
+    ]
+
+    # Проверка на наличие недопустимых комбинаций
+    for seq in keyboard_sequences:
+        for i in range(len(seq) - 2):
+            if seq[i:i + 3] in password.lower() or seq[i:i + 3].upper() in password:
+                raise SequenceError("Пароль не должен содержать три подряд идущих символа с клавиатуры.")
+
+    return "ok"
+
+# Пример использования функции
+if __name__ == "__main__":
+    user_password = input("Введите пароль: ")
+    
+    try:
+        result = check_password(user_password)
+        print(result)
+    except PasswordError as e:
+        print(f"Ошибка: {e}")
+
+
+3.
+def check_password(password):
+    # Проверка длины пароля
+    assert len(password) > 8, "Пароль должен содержать более 8 символов."
+
+    # Проверка наличия больших и маленьких букв
+    assert any(c.islower() for c in password), "Пароль должен содержать хотя бы одну строчную букву."
+    assert any(c.isupper() for c in password), "Пароль должен содержать хотя бы одну заглавную букву."
+
+    # Проверка наличия хотя бы одной цифры
+    assert any(c.isdigit() for c in password), "Пароль должен содержать хотя бы одну цифру."
+
+    # Определяем последовательности клавиатуры
+    keyboard_sequences = [
+        "qwertyuiop", "asdfghjkl", "zxcvbnm",
+        "йцукенгшщз", "фывапролджэ", "ячсмитьбю"
+    ]
+
+    # Проверка на наличие недопустимых комбинаций
+    for seq in keyboard_sequences:
+        for i in range(len(seq) - 2):
+            if seq[i:i + 3] in password.lower() or seq[i:i + 3].upper() in password:
+                raise AssertionError("Пароль не должен содержать три подряд идущих символа с клавиатуры.")
+
+    return "ok"
+
+# Пример использования функции
+if __name__ == "__main__":
+    user_password = input("Введите пароль: ")
+    
+    try:
+        result = check_password(user_password)
+        print(result)
+    except AssertionError as e:
+        print(f"Ошибка: {e}")
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
+
+
+4.
+lass PasswordError(Exception):
+    """Базовый класс для ошибок пароля."""
+    pass
+
+class LengthError(PasswordError):
+    """Ошибка, возникающая при недостаточной длине пароля."""
+    pass
+
+class LetterError(PasswordError):
+    """Ошибка, возникающая при отсутствии букв разных регистров."""
+    pass
+
+class DigitError(PasswordError):
+    """Ошибка, возникающая при отсутствии цифр в пароле."""
+    pass
+
+class SequenceError(PasswordError):
+    """Ошибка, возникающая при наличии недопустимых последовательностей символов."""
+    pass
+
+def check_password(password):
+    # Проверка длины пароля
+    if len(password) < 9:
+        raise LengthError("Пароль должен содержать более 8 символов.")
+
+    # Проверка наличия больших и маленьких букв
+    if not any(c.islower() for c in password):
+        raise LetterError("Пароль должен содержать хотя бы одну строчную букву.")
+    if not any(c.isupper() for c in password):
+        raise LetterError("Пароль должен содержать хотя бы одну заглавную букву.")
+
+    # Проверка наличия хотя бы одной цифры
+    if not any(c.isdigit() for c in password):
+        raise DigitError("Пароль должен содержать хотя бы одну цифру.")
+
+    # Определяем последовательности клавиатуры
+    keyboard_sequences = [
+        "qwertyuiop", "asdfghjkl", "zxcvbnm",
+        "йцукенгшщз", "фывапролджэ", "ячсмитьбю"
+    ]
+
+    # Проверка на наличие недопустимых комбинаций
+    for seq in keyboard_sequences:
+        for i in range(len(seq) - 2):
+            if seq[i:i + 3] in password.lower() or seq[i:i + 3].upper() in password:
+                raise SequenceError("Пароль не должен содержать три подряд идущих символа с клавиатуры.")
+
+    return "ok"
+
+if __name__ == "__main__":
+    while True:
+        user_input = input("Введите новый пароль (или 'Ctrl+Break' для выхода): ")
+        
+        # Имитация нажатия Ctrl+Break
+        if user_input == "Ctrl+Break":
+            print("Bye-Bye")
+            break
+        
+        try:
+            result = check_password(user_input)
+            print(result)
+            break  # Корректный пароль, выходим из цикла
+        except PasswordError as e:
+            print(type(e).__name__)  # Выводим имя класса исключения
+
+
+5.
+class DefaultList(list):
+    def __init__(self, default_value, *args):
+        super().__init__(*args)  # Инициализируем базовый класс (список)
+        self.default_value = default_value  # Сохраняем значение по умолчанию
+
+    def __getitem__(self, index):
+        try:
+            return super().__getitem__(index)  # Пытаемся получить элемент по индексу
+        except IndexError:
+            return self.default_value  # Возвращаем значение по умолчанию в случае ошибки
+
+# Пример использования класса DefaultList
+if __name__ == "__main__":
+    my_list = DefaultList(default_value='default', [1, 2, 3])
+
+    print(my_list[0])  # Вывод: 1
+    print(my_list[1])  # Вывод: 2
+    print(my_list[2])  # Вывод: 3
+    print(my_list[3])  # Вывод: default (выход за пределы списка)
+    print(my_list[10]) # Вывод: default (выход за пределы списка)
