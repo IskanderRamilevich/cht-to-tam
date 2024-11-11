@@ -1,0 +1,148 @@
+1.
+def arithmetic_operation(operation):
+    if operation == '+':
+        return lambda x, y: x + y
+    elif operation == '-':
+        return lambda x, y: x - y
+    elif operation == '*':
+        return lambda x, y: x * y
+    elif operation == '/':
+        return lambda x, y: x / y if y != 0 else 'Ошибка: деление на ноль'
+    else:
+        return None
+
+# Основная программа для проверки работы функции
+if __name__ == "__main__":
+    operation = arithmetic_operation('+')
+    print(operation(1, 4))  # Вывод: 5
+
+
+2.
+def simple_map(transformation, values):
+    result = []  # Инициализируем пустой список для результатов
+    for value in values:
+        result.append(transformation(value))  # Применяем функцию преобразования и добавляем результат в список
+    return result
+
+# Основная программа для проверки работы функции
+if __name__ == "__main__":
+    values = [1, 3, 1, 5, 7]
+    operation = lambda x: x + 5
+    print(*simple_map(operation, values))  # Вывод: 6 8 6 10 12
+
+
+3.
+# Словарь для перевода римских цифр в десятичные значения
+RomanNumbers = {
+    'M': 1000,
+    'CM': 900,
+    'D': 500,
+    'CD': 400,
+    'C': 100,
+    'XC': 90,
+    'L': 50,
+    'XL': 40,
+    'X': 10,
+    'IX': 9,
+    'V': 5,
+    'IV': 4,
+    'I': 1
+}
+
+# Функция для преобразования римского числа в десятичное
+def roman_to_decimal(roman):
+    decimal_value = 0
+    i = 0
+    while i < len(roman):
+        # Проверяем, есть ли комбинация из двух символов
+        if i + 1 < len(roman) and roman[i:i+2] in RomanNumbers:
+            decimal_value += RomanNumbers[roman[i:i+2]]
+            i += 2
+        else:
+            decimal_value += RomanNumbers[roman[i]]
+            i += 1
+    return decimal_value
+
+# Функция для преобразования десятичного числа в римское
+def decimal_to_roman(num):
+    roman_numerals = ''
+    for roman, value in sorted(RomanNumbers.items(), key=lambda x: x[1], reverse=True):
+        while num >= value:
+            roman_numerals += roman
+            num -= value
+    return roman_numerals
+
+# Основная функция для сложения римских чисел и вывода результата
+def add_roman_numbers(roman1, roman2):
+    decimal1 = roman_to_decimal(roman1)
+    decimal2 = roman_to_decimal(roman2)
+    
+    result_decimal = decimal1 + decimal2
+    result_roman = decimal_to_roman(result_decimal)
+    
+    print(f"{roman1} + {roman2} = {result_roman}")
+
+# Пример использования функции
+add_roman_numbers('V', 'IV')
+
+
+4.
+# Словарь для хранения статистики транзакций
+transaction_stats = {}
+
+def get_transactions(t):
+    global transaction_stats
+    
+    if t == 'print_it':
+        # Печатаем статистику по всем типам транзакций
+        for transaction_type, (count, total_amount) in transaction_stats.items():
+            print(f"{count} {transaction_type} {total_amount}")
+    else:
+        # Обрабатываем транзакцию
+        try:
+            # Разделяем строку на номер телефона и остальную часть
+            phone_number, transaction_info = t.split('-')
+            transaction_type, amount_str = transaction_info.split(':')
+            amount = int(amount_str)  # Преобразуем сумму в целое число
+            
+            # Если тип транзакции еще не зарегистрирован, добавляем его
+            if transaction_type not in transaction_stats:
+                transaction_stats[transaction_type] = (0, 0)  # (количество, сумма)
+            
+            # Обновляем статистику
+            count, total_amount = transaction_stats[transaction_type]
+            transaction_stats[transaction_type] = (count + 1, total_amount + amount)
+        
+        except ValueError:
+            print("Ошибка: Неверный формат входных данных.")
+
+# Пример проверки работы функции
+get_transactions('880005553535-перевод:100')
+get_transactions('111111111-перевод:1000')
+get_transactions('880005553535-оплата_жкх:10000')
+get_transactions('89065664312-перевод:50000000')
+get_transactions('print_it')
+
+
+5.
+def same_by(characteristic, objects):
+    # Проверяем, пуст ли список объектов
+    if not objects:
+        return True
+
+    # Вычисляем значение характеристики для первого объекта
+    first_value = characteristic(objects[0])
+    
+    # Проверяем, совпадает ли значение характеристики для всех объектов
+    for obj in objects:
+        if characteristic(obj) != first_value:
+            return False
+            
+    return True
+
+# Пример проверки работы функции
+values = [0, 2, 10, 6]
+if same_by(lambda x: x % 2, values):
+    print('same')
+else:
+    print('different')
