@@ -1,0 +1,156 @@
+1.
+import sys
+
+def main():
+    if len(sys.argv) != 3:
+        print(0)
+        return
+
+    try:
+        num1 = int(sys.argv[1])
+        num2 = int(sys.argv[2])
+    except ValueError:
+        print(0)
+        return
+
+    print(num1 + num2)
+
+if __name__ == "__main__":
+    main()
+
+
+2.
+import sys
+
+def main():
+    if len(sys.argv) == 1:
+        print("NO PARAMS")
+        return
+
+    total_sum = 0
+    sign = 1  
+    error_occurred = False
+
+    for arg in sys.argv[1:]:
+        try:
+            number = int(arg)
+            total_sum += sign * number  
+            sign *= -1  # Меняем знак для следующего числа
+        except ValueError as e:
+            error_occurred = True
+            print(type(e).__name__)  
+
+    if not error_occurred:
+        print(total_sum)
+
+if __name__ == "__main__":
+    main()
+
+
+3.
+import sys
+
+def main():
+    if len(sys.argv) != 4:
+        print("Ошибка: Неверное количество параметров.")
+        return
+
+    try:
+        num1 = float(sys.argv[1])
+        num2 = float(sys.argv[2])
+    except ValueError:
+        print("Ошибка: Неверный тип данных. Ожидались вещественные числа.")
+        return
+
+    operator = sys.argv[3]
+
+    if operator == '+':
+        result = num1 + num2
+    elif operator == '-':
+        result = num1 - num2
+    elif operator == '*':
+        result = num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            print("Ошибка: Деление на ноль.")
+            return
+        result = num1 / num2
+    elif operator == '^':
+        result = num1 ** num2
+    else:
+        print("Ошибка: Неверный оператор. Ожидались +, -, *, / или ^.")
+        return
+
+    print(f"Результат: {result}")
+
+if __name__ == "__main__":
+    main()
+
+
+4.
+import sys
+
+def main():
+    sort_flag = False
+    arguments = {}
+
+    for arg in sys.argv[1:]:
+        if arg == '--sort':
+            sort_flag = True
+        elif '=' in arg:
+            key, value = arg.split('=', 1)  
+            arguments[key] = value
+        else:
+            print(f"Ошибка: Неверный формат аргумента '{arg}'. Ожидался формат 'ключ=значение'.")
+            return
+
+    if sort_flag:
+        sorted_keys = sorted(arguments.keys())
+    else:
+        sorted_keys = arguments.keys()
+
+    for key in sorted_keys:
+        print(f"Key: {key} Value: {arguments[key]}")
+
+if __name__ == "__main__":
+    main()
+
+
+5.
+import sys
+import os
+
+def main():
+    if len(sys.argv) < 2:
+        print("ERROR")
+        return
+
+    filename = sys.argv[-1]  
+    options = sys.argv[1:-1]  
+
+    if not os.path.isfile(filename):
+        print("ERROR")
+        return
+
+    try:
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+
+        if "--sort" in options:
+            lines.sort()  
+
+        if "--num" in options:
+            for index, line in enumerate(lines):
+                print(f"{index} {line.strip()}")
+        else:
+            for line in lines:
+                print(line.strip())
+
+        if "--count" in options:
+            print(f"rows count: {len(lines)}")
+
+    except Exception as e:
+        print("ERROR")
+
+if __name__ == "__main__":
+    main()
