@@ -1,23 +1,20 @@
 class Rectangle:
     def __init__(self, x, y, w, h):
-        self.x = x  # Координата левой нижней точки по оси X
-        self.y = y  # Координата левой нижней точки по оси Y
-        self.w = w  # Ширина прямоугольника
-        self.h = h  # Высота прямоугольника
+        self.x = x  
+        self.y = y  
+        self.w = w  
+        self.h = h  
 
     def intersection(self, other):
-        # Находим координаты пересечения
         x_overlap = max(self.x, other.x)
         y_overlap = max(self.y, other.y)
         x_overlap_end = min(self.x + self.w, other.x + other.w)
         y_overlap_end = min(self.y + self.h, other.y + other.h)
 
-        # Проверяем, есть ли пересечение
         if x_overlap < x_overlap_end and y_overlap < y_overlap_end:
-            # Если есть пересечение, создаем новый прямоугольник
             return Rectangle(x_overlap, y_overlap, x_overlap_end - x_overlap, y_overlap_end - y_overlap)
 
-        return None  # Если пересечения нет
+        return None  
 
     def get_x(self):
         return self.x
@@ -31,7 +28,6 @@ class Rectangle:
     def get_h(self):
         return self.h
 
-# Пример использования класса
 rect1 = Rectangle(0, 0, 10, 10)
 rect2 = Rectangle(10, 0, 10, 10)
 rect3 = rect1.intersection(rect2)
