@@ -1,0 +1,296 @@
+1.
+def is_palindrome(data):
+    cleaned_data = ''.join(data.split()).lower()
+    return cleaned_data == cleaned_data[::-1]
+ef test_is_palindrome():
+    tests = [
+        ("A man a plan a canal Panama", True),
+        ("racecar", True),
+        ("hello", False),
+        ("", True),  
+        ("No lemon no melon", True),
+        ("Was it a car or a cat I saw?", True),
+        ("Not a palindrome", False),
+        ("12321", True),
+        ("12345", False)
+    ]
+
+    for data, expected in tests:
+        result = is_palindrome(data)
+        if result != expected:
+            print("NO")
+            return
+
+    print("YES")
+
+if __name__ == "__main__":
+    test_is_palindrome()
+
+
+2.
+def is_palindrome(data):
+    cleaned_data = ''.join(data.split()).lower()
+    return cleaned_data == cleaned_data[::-1]
+def main():
+    import sys
+    
+    data = sys.stdin.read().strip()
+    
+    if is_palindrome(data):
+        print("YES")
+    else:
+        print("NO")
+
+if __name__ == "__main__":
+    main()
+
+
+3.
+import re
+
+def is_correct_mobile_phone_number_ru(number):
+    # Убираем пробелы и дефисы для упрощения проверки
+    cleaned_number = number.replace(" ", "").replace("-", "")
+    # Регулярное выражение для проверки номера
+    pattern = r'^(8|\+7)(\(\d{3}\}|\d{3})\d{7}$'
+    
+    return bool(re.match(pattern, cleaned_number))
+def test_is_correct_mobile_phone_number_ru():
+    # Список тестов в формате (входные данные, ожидаемый результат)
+    tests = [
+        ("+7(900)1234567", True),
+        ("8(999)1234567", True),
+        ("+7 999 123-45-67", True),
+        ("8 999 123 45 67", True),
+        ("+7-999-123-45-67", True),
+        ("89991234567", True),
+        ("+79001234567", True),
+        ("+7(900)123-45-67", True),
+        ("+7(900)1234567", True),
+        ("8(900)1234567", True),
+        ("8 900 123 45 67", True),
+        ("+7 900 123 45 67", True),
+        
+        # Неверные номера
+        ("+7(900)12345678", False), 
+        ("8(99)1234567", False),     
+        ("+8(900)1234567", False),   
+        ("+7(900)12a4567", False),   
+        ("80001234567", False),       
+        ("+79(900)1234567", False),   
+        ("8(900)12345678", False),    
+        ("8-900-123-45-6789", False), 
+    ]
+
+    for number, expected in tests:
+        result = is_correct_mobile_phone_number_ru(number)
+        if result != expected:
+            print("NO")
+            return
+
+    print("YES")
+
+if __name__ == "__main__":
+    test_is_correct_mobile_phone_number_ru()
+
+
+4.
+import re
+
+def is_correct_mobile_phone_number_ru(number):
+    cleaned_number = number.replace(" ", "").replace("-", "")
+    pattern = r'^(8|\+7)(\(\d{3}\)|\d{3})\d{7}$'
+    return bool(re.match(pattern, cleaned_number))
+def main():
+    import sys
+    
+    number = sys.stdin.read().strip()
+    
+    if is_correct_mobile_phone_number_ru(number):
+        print("YES")
+    else:
+        print("NO")
+
+
+5.
+import re
+
+def strip_punctuation_ru(data):
+    cleaned_data = re.sub(r'[^\w\s]', ' ', data)
+    return ' '.join(cleaned_data.split())
+def test_strip_punctuation_ru():
+    # Список тестов в формате (входные данные, ожидаемый результат)
+    tests = [
+        ("Привет, мир!", "Привет мир"),
+        ("Как дела? Хорошо.", "Как дела Хорошо"),
+        ("Это - тест!", "Это тест"),
+        ("Знаки препинания: , . ; : ! ? ( ) [ ] { }", "Знаки препинания"),
+        ("Привет... Как дела?", "Привет Как дела"),
+        ("", ""),  а
+        ("   Много   пробелов   ", "Много пробелов"),  
+        ("Тест: 1, 2, 3... Проверка!", "Тест 1 2 3 Проверка")
+    ]
+
+    for data, expected in tests:
+        result = strip_punctuation_ru(data)
+        if result != expected:
+            print("NO")
+            return
+
+    print("YES")
+
+if __name__ == "__main__":
+    test_strip_punctuation_ru()
+
+
+6.
+import re
+
+def strip_punctuation_ru(data):
+    cleaned_data = re.sub(r'[^\w\s]', ' ', data)
+    return ' '.join(cleaned_data.split())
+
+if __name__ == "__main__":
+    test_string = "Привет, мир! Как дела? Это - тест: проверка знаков препинания..."
+    result = strip_punctuation_ru(test_string)
+    print(result)  
+
+
+7.
+def reverse(s):
+    return s[::-1]
+
+import unittest
+from reverse import reverse
+
+class TestReverseFunction(unittest.TestCase):
+
+    def test_empty_string(self):
+        self.assertEqual(reverse(""), "")
+
+    def test_single_character(self):
+        self.assertEqual(reverse("a"), "a")
+        self.assertEqual(reverse("Z"), "Z")
+
+    def test_palindrome(self):
+        self.assertEqual(reverse("racecar"), "racecar")  
+
+    def test_normal_string(self):
+        self.assertEqual(reverse("hello"), "olleh")  
+
+    def test_not_iterable(self):
+        with self.assertRaises(TypeError):  
+            reverse(123)
+
+    def test_iterable_not_string(self):
+        with self.assertRaises(TypeError):  
+            reverse(['h', 'e', 'l', 'l', 'o'])
+
+if __name__ == "__main__":
+    unittest.main()
+
+
+8.
+def reverse(s):
+    return s 
+import pytest
+from reverse import reverse
+
+def test_empty_string():
+    assert reverse("") == ""
+
+def test_single_character():
+    assert reverse("a") == "a"
+    assert reverse("Z") == "Z"
+
+def test_palindrome():
+    assert reverse("racecar") == "racecar"  
+
+def test_normal_string():
+    assert reverse("hello") == "olleh"  
+
+def test_not_iterable():
+    with pytest.raises(TypeError):  
+        reverse(123)
+
+def test_iterable_not_string():
+    with pytest.raises(TypeError):  
+        reverse(['h', 'e', 'l', 'l', 'o'])
+
+if __name__ == "__main__":
+    pytest.main()
+
+
+9.
+def count_chars(s):
+    if not isinstance(s, str):
+        raise TypeError("Input must be a string")
+    
+    char_count = {}
+    for char in s:
+        if char in char_count:
+            char_count[char] += 1
+        else:
+            char_count[char] = 1
+    return char_count
+
+import pytest
+from count import count_chars
+
+def test_normal_string():
+    assert count_chars("hello") == {'h': 1, 'e': 1, 'l': 2, 'o': 1}
+    assert count_chars("character") == {'c': 2, 'h': 1, 'a': 2, 'r': 2, 't': 1, 'e': 1}
+
+def test_empty_string():
+    assert count_chars("") == {}
+
+def test_single_character():
+    assert count_chars("a") == {'a': 1}
+    assert count_chars("!") == {'!': 1}
+
+def test_string_with_spaces():
+    assert count_chars("hello world") == {'h': 1, 'e': 1, 'l': 3, 'o': 2, ' ': 1, 'w': 1, 'r': 1, 'd': 1}
+
+def test_not_string_input():
+    with pytest.raises(TypeError):  
+        count_chars(123)
+    
+    with pytest.raises(TypeError):  
+        count_chars(['h', 'e', 'l', 'l', 'o'])
+    
+    with pytest.raises(TypeError):  
+        count_chars(None)
+
+if __name__ == "__main__":
+    pytest.main()
+
+
+10.
+def count_chars(s):
+    if not isinstance(s, str):
+        raise TypeError("Input must be a string")
+    
+    char_count = {}
+    for char in s:
+        if char in char_count:
+            char_count[char] += 1
+        else:
+            char_count[char] = 1
+    return char_count
+
+if __name__ == "__main__":
+    test_string = "hello world"
+    result = count_chars(test_string)
+    print(result)  
+if __name__ == "__main__":
+    test_strings = [
+        "hello",
+        "character",
+        "hello world",
+        "",
+        "aabbcc",
+        "12345!@#"
+    ]
+
+    for test in test_strings:
+        print(f"'{test}': {count_chars(test)}")
